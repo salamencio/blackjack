@@ -10,7 +10,7 @@
   <link rel="icon" type="image/x-icon" href="./favicon.ico" />
   <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
   <link rel="manifest" href="./manifest.json" />
-  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js" onerror="this.onerror=null;var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js';document.head.appendChild(s);"></script>
   <style>
     :root {
       --bg-dark: #06140e;
@@ -164,8 +164,8 @@
 
     .player-modal-avatar-wrap {
       position: relative;
-      width: 152px;
-      height: 152px;
+      width: 184px;
+      height: 184px;
       border-radius: 50%;
       padding: 4px;
       background: linear-gradient(135deg, var(--gold-bright), #8b6914);
@@ -182,7 +182,7 @@
     }
 
     .player-modal-name {
-      font-size: 1.35rem;
+      font-size: 1.6rem;
       font-weight: 800;
       color: var(--gold-bright);
       letter-spacing: 0.3px;
@@ -404,10 +404,10 @@
     .profile-chip-btn {
       display: flex;
       align-items: center;
-      gap: 6px;
-      background: rgba(255, 255, 255, 0.05);
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.06);
       border: 1px solid var(--border-subtle);
-      padding: 3px 9px 3px 4px;
+      padding: 4px 12px 4px 5px;
       border-radius: 999px;
       color: var(--text-main);
       cursor: pointer;
@@ -420,19 +420,19 @@
     }
 
     .profile-chip-avatar {
-      width: 26px;
-      height: 26px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       object-fit: cover;
-      border: 1px solid var(--gold);
+      border: 2px solid var(--gold);
       background: #0e3222;
       flex-shrink: 0;
     }
 
     .profile-chip-name {
-      font-size: 0.78rem;
-      font-weight: 700;
-      max-width: 88px;
+      font-size: 0.96rem;
+      font-weight: 800;
+      max-width: 145px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -580,13 +580,13 @@
     .mp-strip-chip {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 999px;
-      padding: 3px 8px 3px 4px;
-      font-size: 0.75rem;
-      font-weight: 700;
+      padding: 4px 11px 4px 5px;
+      font-size: 0.9rem;
+      font-weight: 800;
       color: var(--text-main);
       transition: all 0.16s;
     }
@@ -599,7 +599,7 @@
     .mp-strip-player-btn {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       background: transparent;
       border: none;
       color: inherit;
@@ -613,11 +613,11 @@
     }
 
     .mp-strip-player-btn img {
-      width: 22px;
-      height: 22px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       object-fit: cover;
-      border: 1px solid var(--gold);
+      border: 1.5px solid var(--gold);
     }
 
     .ready-tag {
@@ -799,11 +799,11 @@
     }
 
     .card.card-new {
-      animation: dealCardFlight 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation: dealCardFlight 0.50s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
     .card.card-flip-reveal {
-      animation: flipRevealCard 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation: flipRevealCard 0.56s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
     @keyframes dealCardFlight {
@@ -1072,16 +1072,16 @@
     .spot-owner-pill {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      font-size: 0.68rem;
-      font-weight: 700;
+      gap: 6px;
+      font-size: 0.86rem;
+      font-weight: 800;
       color: var(--text-main);
-      background: rgba(0, 0, 0, 0.62);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      padding: 2px 7px 2px 3px;
+      background: rgba(0, 0, 0, 0.68);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 3px 10px 3px 4px;
       border-radius: 999px;
       cursor: pointer;
-      max-width: 136px;
+      max-width: 175px;
       transition: border-color 0.15s, background 0.15s;
     }
 
@@ -1092,11 +1092,11 @@
     }
 
     .spot-owner-pill img {
-      width: 17px;
-      height: 17px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
       object-fit: cover;
-      border: 1px solid var(--gold);
+      border: 1.5px solid var(--gold);
       flex-shrink: 0;
     }
 
@@ -1541,22 +1541,22 @@
     .turn-banner {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 9px;
       background: rgba(0, 0, 0, 0.45);
       border: 1px solid var(--gold-dim);
-      padding: 5px 13px;
+      padding: 6px 15px;
       border-radius: 999px;
-      font-size: 0.82rem;
-      font-weight: 700;
+      font-size: 0.96rem;
+      font-weight: 800;
       color: var(--gold-bright);
     }
 
     .turn-banner img {
-      width: 22px;
-      height: 22px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       object-fit: cover;
-      border: 1px solid var(--gold);
+      border: 1.5px solid var(--gold);
     }
 
     .turn-timer-box {
@@ -1888,8 +1888,8 @@
     }
 
     .avatar-preview-large {
-      width: 112px;
-      height: 112px;
+      width: 136px;
+      height: 136px;
       border-radius: 50%;
       border: 3px solid var(--gold);
       object-fit: cover;
@@ -1899,14 +1899,14 @@
 
     .preset-avatars-row {
       display: flex;
-      gap: 6px;
+      gap: 8px;
       flex-wrap: wrap;
       justify-content: center;
     }
 
     .preset-avatar-btn {
-      width: 34px;
-      height: 34px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       border: 1.5px solid rgba(212, 175, 55, 0.45);
       padding: 0;
@@ -2081,20 +2081,21 @@
     .player-badge-mp {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       background: rgba(212, 175, 55, 0.14);
       border: 1px solid var(--gold-dim);
-      padding: 4px 10px 4px 5px;
+      padding: 5px 13px 5px 6px;
       border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 700;
+      font-size: 0.92rem;
+      font-weight: 800;
     }
 
     .player-badge-mp img {
-      width: 22px;
-      height: 22px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       object-fit: cover;
+      border: 1.5px solid var(--gold);
     }
 
     .status-toast {
@@ -2133,9 +2134,14 @@
         gap: 4px;
       }
 
+      .profile-chip-avatar {
+        width: 32px;
+        height: 32px;
+      }
+
       .profile-chip-name {
-        max-width: 64px;
-        font-size: 0.74rem;
+        max-width: 112px;
+        font-size: 0.86rem;
       }
 
       .bankroll-pill {
@@ -2263,13 +2269,14 @@
 
       .spot-owner-pill {
         max-width: 100%;
-        font-size: 0.62rem;
-        padding: 2px 5px 2px 2px;
+        font-size: 0.78rem;
+        padding: 3px 7px 3px 3px;
+        gap: 5px;
       }
 
       .spot-owner-pill img {
-        width: 14px;
-        height: 14px;
+        width: 22px;
+        height: 22px;
       }
 
       .control-dock {
@@ -3102,13 +3109,35 @@
         return phase === "resolved" && postRoundDeadline > Date.now();
       }
 
-      // Load & Save State
+      // Load & Save State (Mobile-resilient storage + pending bet restoration)
+      function readRawPersistedState() {
+        const keys = [STORAGE_KEY, "blackjack_amer_royale_v6", "blackjack_amer_royale_v5"];
+        for (const k of keys) {
+          try {
+            const val = localStorage.getItem(k);
+            if (val) return val;
+          } catch (e) {}
+        }
+        for (const k of keys) {
+          try {
+            const val = sessionStorage.getItem(k);
+            if (val) return val;
+          } catch (e) {}
+        }
+        try {
+          if (typeof window.name === "string" && window.name.startsWith("BJ_STATE:")) {
+            return window.name.slice(9);
+          }
+        } catch (e) {}
+        return null;
+      }
+
       function loadState() {
         try {
-          const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("blackjack_amer_royale_v6");
+          const raw = readRawPersistedState();
           if (raw) {
             const parsed = JSON.parse(raw);
-            if (typeof parsed.balance === "number" && parsed.balance >= 0) {
+            if (typeof parsed.balance === "number" && Number.isFinite(parsed.balance) && parsed.balance >= 0) {
               state.balance = roundMoney(parsed.balance);
             }
             if (parsed.stats) {
@@ -3146,12 +3175,13 @@
             }
           }
         } catch (e) {
-          console.warn("Error leyendo localStorage:", e);
+          console.warn("Error leyendo almacenamiento:", e);
         }
 
         SoundFX.setEnabled(state.soundEnabled);
 
-        const recovered = roundMoney(state.soloPendingBets.reduce((a, b) => a + b, 0));
+        const pendingToRestore = [...state.soloPendingBets];
+        const recovered = roundMoney(pendingToRestore.reduce((a, b) => a + b, 0));
         if (recovered > 0) {
           state.balance = roundMoney(state.balance + recovered);
           state.soloPendingBets = [0, 0, 0];
@@ -3159,7 +3189,11 @@
 
         initSoloSpots();
 
-        if (state.keepBet && state.soloLastBets.some(b => b > 0)) {
+        // Restore active bets that were on the table before closing/reloading on mobile,
+        // or fall back to soloLastBets when keepBet is active
+        if (recovered > 0) {
+          applySavedBetsSolo(pendingToRestore);
+        } else if (state.keepBet && state.soloLastBets.some(b => b > 0)) {
           applySavedBetsSolo(state.soloLastBets);
         }
         saveState();
@@ -3171,7 +3205,24 @@
             state.soloActiveSpots = spots.map(s => Boolean(s.open));
             state.soloPendingBets = spots.map(s => roundMoney(s.bet || 0));
           }
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          const serialized = JSON.stringify(state);
+          try {
+            localStorage.setItem(STORAGE_KEY, serialized);
+          } catch (quotaErr) {
+            // If a custom avatar exceeded mobile storage quota, persist bets & balance without custom image
+            const slimState = Object.assign({}, state, {
+              profile: Object.assign({}, state.profile, { avatar: PRESET_AVATARS[0] })
+            });
+            try {
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(slimState));
+            } catch (e2) {}
+          }
+          try {
+            sessionStorage.setItem(STORAGE_KEY, serialized);
+          } catch (e3) {}
+          try {
+            window.name = "BJ_STATE:" + serialized;
+          } catch (e4) {}
         } catch (e) {
           console.warn("Error guardando estado:", e);
         }
@@ -3598,6 +3649,7 @@
         if (!spots[spotIdx].open) {
           if (getMyOpenSpots().length >= MAX_SPOTS_PER_PLAYER) return;
           openSpotForMe(spotIdx);
+          if (mp.role === "guest") return;
         }
         if (spots[spotIdx].ownerId !== myId) return;
 
@@ -3633,6 +3685,7 @@
         if (!spots[spotIdx].open) {
           if (getMyOpenSpots().length >= MAX_SPOTS_PER_PLAYER) return;
           openSpotForMe(spotIdx);
+          if (mp.role === "guest") return;
         }
         if (spots[spotIdx].ownerId !== myId) return;
 
@@ -3810,14 +3863,25 @@
       }
 
       function sendGuestBetsToHost() {
-        if (mp.role !== "guest" || !mp.hostConn || !mp.hostConn.open) return;
         const myId = getMyId();
         const myBets = [];
+        let hasAnyBet = false;
+        const updatedOnlineLast = [...state.onlineLastBets];
         for (let i = 0; i < spots.length; i++) {
           if (spots[i].open && spots[i].ownerId === myId) {
-            myBets.push({ spotIdx: i, bet: roundMoney(spots[i].bet || 0) });
+            const b = roundMoney(spots[i].bet || 0);
+            myBets.push({ spotIdx: i, bet: b });
+            updatedOnlineLast[i] = b;
+            if (b > 0) hasAnyBet = true;
+          } else {
+            updatedOnlineLast[i] = 0;
           }
         }
+        if (hasAnyBet) {
+          state.onlineLastBets = updatedOnlineLast;
+          saveState();
+        }
+        if (mp.role !== "guest" || !mp.hostConn || !mp.hostConn.open) return;
         mp.hostConn.send({
           type: "GUEST_UPDATE_BETS",
           myBets,
@@ -3894,9 +3958,9 @@
             syncAndRender();
 
             if (idx === dealSteps.length - 1) {
-              scheduleAction(finalizeInitialDeal, 220);
+              scheduleAction(finalizeInitialDeal, 450);
             }
-          }, idx * 120);
+          }, idx * 300);
         });
       }
 
@@ -3920,7 +3984,7 @@
           if (dealer.cards[1]) dealer.cards[1].animFlip = true;
           SoundFX.playCardFlip();
           syncAndRender();
-          scheduleAction(() => resolveAllHands(), 550);
+          scheduleAction(() => resolveAllHands(), 800);
           return;
         }
 
@@ -4106,16 +4170,16 @@
 
         function stepDealerDraw() {
           if (!needsDealerDraw || evaluateHand(dealer.cards, false).total >= 17) {
-            scheduleAction(() => resolveAllHands(), 450);
+            scheduleAction(() => resolveAllHands(), 650);
             return;
           }
           dealer.cards.push(drawCard());
           SoundFX.playCardSlide();
           syncAndRender();
-          scheduleAction(stepDealerDraw, 520);
+          scheduleAction(stepDealerDraw, 720);
         }
 
-        scheduleAction(stepDealerDraw, 550);
+        scheduleAction(stepDealerDraw, 750);
       }
 
       function resolveAllHands() {
@@ -5006,7 +5070,10 @@
       }
 
       function setupPeerGuest() {
-        if (typeof Peer === "undefined") return;
+        if (typeof Peer === "undefined") {
+          document.getElementById("mp-feedback").textContent = "Cargando motor multijugador P2P, inténtalo de nuevo en un segundo...";
+          return;
+        }
         const targetCode = document.getElementById("mp-join-code").value.trim().toUpperCase();
         if (!targetCode) {
           document.getElementById("mp-feedback").textContent = "Introduce un código de sala válido.";
@@ -5059,12 +5126,19 @@
                 activeTurnHand = typeof data.activeTurnHand === "number" ? data.activeTurnHand : 0;
                 turnDeadline = data.turnDeadline || 0;
                 turnDurationActive = data.turnDurationActive || 15;
+                const prevPostRoundDeadline = postRoundDeadline;
                 if (typeof data.postRoundDeadline === "number") {
                   postRoundDeadline = data.postRoundDeadline;
                 }
                 dealer = data.dealer;
                 spots = data.spots;
                 mp.roster = data.roster || {};
+                if (prevPostRoundDeadline > 0 && postRoundDeadline === 0 && phase === "betting" && !deferredKeepBetApplied && state.keepBet && state.onlineLastBets.some(b => b > 0)) {
+                  deferredKeepBetApplied = true;
+                  applySavedBetsOnline();
+                  sendGuestBetsToHost();
+                  saveState();
+                }
                 if (typeof data.shoeCount === "number") {
                   document.getElementById("shoe-counter").textContent = `Zapato: ${data.shoeCount} cartas`;
                 }
@@ -5365,8 +5439,23 @@
       });
 
       const customInput = document.getElementById("custom-amount");
+      function parseCustomBetValue() {
+        const normalized = String(customInput.value || "").trim().replace(",", ".");
+        const val = parseFloat(normalized);
+        return Number.isFinite(val) && val > 0 ? val : 0;
+      }
+
+      function commitPendingCustomBetIfNeeded() {
+        const val = parseCustomBetValue();
+        const idx = getSelectedSpotIdx();
+        if (val > 0 && idx !== -1 && spots[idx] && spots[idx].open && spots[idx].bet === 0) {
+          addBetToSpot(idx, val);
+          customInput.value = "";
+        }
+      }
+
       document.getElementById("btn-add-custom").addEventListener("click", () => {
-        const val = parseFloat(customInput.value);
+        const val = parseCustomBetValue();
         const idx = getSelectedSpotIdx();
         if (val > 0 && idx !== -1) {
           addBetToSpot(idx, val);
@@ -5375,7 +5464,7 @@
       });
 
       document.getElementById("btn-set-custom").addEventListener("click", () => {
-        const val = parseFloat(customInput.value);
+        const val = parseCustomBetValue();
         const idx = getSelectedSpotIdx();
         if (val > 0 && idx !== -1) {
           setExactBetOnSpot(idx, val);
@@ -5444,9 +5533,18 @@
       });
 
       document.getElementById("btn-clear-bet").addEventListener("click", clearMyBets);
-      document.getElementById("btn-deal").addEventListener("click", startDeal);
-      document.getElementById("btn-ready-toggle").addEventListener("click", toggleMyReady);
-      document.getElementById("btn-force-start").addEventListener("click", startDeal);
+      document.getElementById("btn-deal").addEventListener("click", () => {
+        commitPendingCustomBetIfNeeded();
+        startDeal();
+      });
+      document.getElementById("btn-ready-toggle").addEventListener("click", () => {
+        commitPendingCustomBetIfNeeded();
+        toggleMyReady();
+      });
+      document.getElementById("btn-force-start").addEventListener("click", () => {
+        commitPendingCustomBetIfNeeded();
+        startDeal();
+      });
 
       function disableAllPlayButtons() {
         document.getElementById("btn-hit").disabled = true;
@@ -5535,8 +5633,9 @@
           } else if (action === "circle-click") {
             if (spots[idx] && spots[idx].open) {
               if (spots[idx].ownerId === myId) {
+                const wasAlreadySelected = getSelectedSpotIdx() === idx;
                 setSelectedSpotIdx(idx);
-                if (spots[idx].bet > 0) {
+                if (wasAlreadySelected && spots[idx].bet > 0) {
                   removeTopChip(idx);
                 } else {
                   saveState();
@@ -5698,6 +5797,13 @@
         document.getElementById("mp-join-code").value = roomParam.toUpperCase();
         switchView("mp-view");
       }
+
+      // Mobile & desktop lifecycle persistence
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "hidden") saveState();
+      });
+      window.addEventListener("pagehide", saveState);
+      window.addEventListener("beforeunload", saveState);
 
       // BOOT
       setupPresetAvatars();
