@@ -1,24 +1,16 @@
 # Blackjack Americano — Mesa Royale
 
-Aplicación web de **Blackjack Americano** lista para alojar gratis en **GitHub Pages**, con modo individual y **salas multijugador en tiempo real mediante PeerJS** (sin servidor).
+Aplicación web de **Blackjack Americano** lista para alojar gratis en **GitHub Pages**, con dividir pareja (**Split**), **Doblar tras dividir (DAS)**, modo individual (hasta 3 manos), **salas multijugador P2P de 9 huecos** (máximo 3 manos por jugador) y **perfil personalizable** con foto, nombre y contraseña.
 
-## Características principales
+## Reglas de Dividir (Split) implementadas
 
-- **Reglas de Casino Americano**: Zapato de 6 barajas (312 cartas) mezclado aleatoriamente, el crupier comprueba Blackjack natural con As o figura y **se planta en todos los 17** (duros y blandos).
-- **Pagos verificados**:
-  - **Blackjack Natural (21 con 2 cartas)**: paga **3:2** (`apuesta × 2,5` devuelto al saldo). Si el crupier también tiene Blackjack natural, es **empate** y recuperas tu apuesta.
-  - **Victoria normal**: paga **1:1** (`apuesta × 2` devuelto al saldo).
-  - **Doblar (`Doblar`)**: duplica tu apuesta en las dos primeras cartas, reparte 1 carta adicional y paga **1:1** sobre el total doblado si ganas.
-  - **Empate (`Push`)**: devuelve exactamente tu apuesta.
-- **Apuestas flexibles y personalizadas**:
-  - Fichas rápidas (`1 €`, `5 €`, `25 €`, `50 €`, `100 €`, `500 €`) apilables directamente en los huecos.
-  - Campo de **cantidad personalizada** para escribir cualquier importe exacto (`Añadir` o `Fijar`), además de botones `×2` y `MAX`.
-  - Hasta **3 huecos simultáneos** en la mesa, opción **Mantener apuesta** y botón **Repetir última**.
-- **Banca persistente**: El saldo inicial de **1.000 €** y tus estadísticas se guardan automáticamente en el navegador (`localStorage`). Para reiniciar el dinero debes entrar en la pestaña **Banca / Reiniciar** y escribir `reiniciar`.
-- **Multijugador P2P (PeerJS)**: Crea una sala y comparte el código o enlace directo con tus amigos para ocupar los 3 asientos de la mesa.
+- **Parejas del mismo valor**: Puedes dividir cualquier pareja de dos cartas iniciales del mismo valor (incluidas parejas de figuras/dieces como `K-Q` o `10-J`), colocando una segunda apuesta idéntica.
+- **Ases divididos (`A-A`)**: Al dividir Ases, cada As recibe exactamente **1 carta adicional** y se planta automáticamente (sin re-dividir Ases ni doblar).
+- **21 tras dividir**: Alcanzar 21 en una mano dividida paga **1:1** (victoria normal, no Blackjack natural 3:2).
+- **Doblar tras dividir (DAS)**: Permitido en cualquier mano dividida que no sea de Ases (hasta 4 manos divididas por hueco).
 
-## Cómo subirlo a GitHub Pages en 3 pasos
+## Cómo subirlo a GitHub Pages
 
-1. Crea un repositorio nuevo en [GitHub](https://github.com/new) (por ejemplo, `blackjack`).
-2. Sube **todos los archivos** de esta carpeta (`index.html`, `favicon.svg`, `favicon.ico`, `icon-192.png`, `icon-512.png`, `apple-touch-icon.png`, `manifest.json`, `.nojekyll`, `README.md`) a la raíz del repositorio.
-3. Ve a **Settings → Pages**, en *Build and deployment* selecciona **Deploy from a branch**, elige la rama `main` y la carpeta `/ (root)`, y pulsa **Save**. En unos segundos tendrás tu enlace público listo para jugar.
+1. Crea un repositorio nuevo en GitHub (por ejemplo, `blackjack`).
+2. Sube todos los archivos de esta carpeta a la raíz del repositorio.
+3. Ve a **Settings → Pages**, selecciona **Deploy from a branch**, elige `main` y `/ (root)` y pulsa **Save**.

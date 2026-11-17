@@ -1,7 +1,7 @@
 {
   "name": "Blackjack Americano — Mesa Royale",
   "short_name": "Blackjack",
-  "description": "Blackjack americano con apuestas personalizadas, hasta 3 manos simultáneas y salas multijugador P2P.",
+  "description": "Blackjack americano con dividir (split), doble tras dividir, perfil personalizado, 3 manos en solitario y 9 manos en salas multijugador P2P.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#071c13",
