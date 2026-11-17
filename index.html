@@ -432,7 +432,7 @@
     .profile-chip-name {
       font-size: 0.96rem;
       font-weight: 800;
-      max-width: 145px;
+      max-width: 280px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -501,9 +501,9 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 8px 14px 12px;
-      max-width: 1360px;
-      width: 100%;
+      padding: 6px 8px 12px;
+      max-width: 1760px;
+      width: 99%;
       margin: 0 auto;
       gap: 8px;
     }
@@ -666,12 +666,12 @@
       white-space: nowrap;
     }
 
-    /* CIRCULAR / OVAL CASINO TABLE (PC) */
+    /* CIRCULAR / OVAL CASINO TABLE (PC) - EXPANDED HORIZONTALLY */
     .felt-surface {
       flex: 1;
       background:
-        radial-gradient(circle at 50% 51%, var(--felt-center) 0%, var(--felt-mid) 52%, var(--felt-edge) 100%);
-      border-radius: 46% / 42%;
+        radial-gradient(ellipse at 50% 51%, var(--felt-center) 0%, var(--felt-mid) 56%, var(--felt-edge) 100%);
+      border-radius: 30% / 46%;
       border: 11px solid var(--rail-dark);
       box-shadow:
         inset 0 0 70px rgba(0, 0, 0, 0.72),
@@ -679,16 +679,16 @@
         0 0 0 3px var(--gold-dim),
         0 18px 44px rgba(0, 0, 0, 0.78);
       position: relative;
-      min-height: 630px;
-      height: clamp(630px, 69vh, 780px);
+      min-height: 640px;
+      height: clamp(640px, 70vh, 800px);
       overflow: visible;
     }
 
     .felt-surface::before {
       content: "";
       position: absolute;
-      inset: 16px;
-      border-radius: 46% / 42%;
+      inset: 14px;
+      border-radius: 30% / 46%;
       border: 1px dashed rgba(212, 175, 55, 0.22);
       pointer-events: none;
     }
@@ -894,21 +894,21 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-width: 128px;
-      max-width: 195px;
-      padding: 6px 8px;
+      min-width: 146px;
+      max-width: 245px;
+      padding: 7px 10px;
       border-radius: 16px;
-      background: rgba(4, 18, 12, 0.64);
+      background: rgba(4, 18, 12, 0.68);
       backdrop-filter: blur(5px);
-      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      border: 1.5px solid rgba(255, 255, 255, 0.14);
       transition: box-shadow 0.25s, border-color 0.25s, background 0.25s, transform 0.25s;
       z-index: 6;
     }
 
     .spots-ring.online-9 .spot-slot {
-      min-width: 104px;
-      max-width: 162px;
-      padding: 4px 6px;
+      min-width: 122px;
+      max-width: 215px;
+      padding: 5px 8px;
       border-radius: 14px;
     }
 
@@ -1072,16 +1072,16 @@
     .spot-owner-pill {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      font-size: 0.86rem;
+      gap: 7px;
+      font-size: 0.9rem;
       font-weight: 800;
       color: var(--text-main);
-      background: rgba(0, 0, 0, 0.68);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      padding: 3px 10px 3px 4px;
+      background: rgba(0, 0, 0, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 4px 11px 4px 4px;
       border-radius: 999px;
       cursor: pointer;
-      max-width: 175px;
+      max-width: 225px;
       transition: border-color 0.15s, background 0.15s;
     }
 
@@ -1092,18 +1092,345 @@
     }
 
     .spot-owner-pill img {
-      width: 26px;
-      height: 26px;
+      width: 31px;
+      height: 31px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--gold);
+      flex-shrink: 0;
+    }
+
+    .spot-owner-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-width: 0;
+      line-height: 1.15;
+    }
+
+    .spot-owner-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 155px;
+    }
+
+    .spot-owner-balance {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--gold-bright);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .player-balance-tag {
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: var(--gold-bright);
+      background: rgba(212, 175, 55, 0.16);
+      border: 1px solid rgba(212, 175, 55, 0.42);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    /* COLLAPSIBLE CHAT WIDGET (SINGLE BUTTON WHEN CLOSED) */
+    .chat-fab-btn {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      z-index: 4500;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: linear-gradient(135deg, #134e35, #09261a);
+      border: 1.5px solid var(--gold);
+      color: var(--gold-bright);
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.7), 0 0 18px rgba(212, 175, 55, 0.25);
+      transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+    }
+
+    .chat-fab-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.8), 0 0 24px rgba(212, 175, 55, 0.4);
+    }
+
+    .chat-fab-btn.hidden-when-open {
+      display: none;
+    }
+
+    .chat-unread-badge {
+      background: #e74c3c;
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 900;
+      padding: 1px 7px;
+      border-radius: 999px;
+      border: 1px solid #fff;
+      min-width: 20px;
+      text-align: center;
+      animation: popBadge 0.25s ease-out;
+    }
+
+    .chat-panel-window {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      z-index: 4600;
+      width: 350px;
+      max-width: calc(100vw - 24px);
+      height: 440px;
+      max-height: 72vh;
+      background: linear-gradient(165deg, rgba(10, 31, 22, 0.98), rgba(5, 16, 11, 0.99));
+      border: 1.5px solid var(--gold);
+      border-radius: 18px;
+      box-shadow: 0 22px 55px rgba(0, 0, 0, 0.85), 0 0 28px rgba(212, 175, 55, 0.22);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      animation: fadeSlideUp 0.2s ease-out;
+    }
+
+    .chat-panel-window.open {
+      display: flex;
+    }
+
+    .chat-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: rgba(212, 175, 55, 0.14);
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--gold-bright);
+      font-weight: 800;
+      font-size: 0.88rem;
+    }
+
+    .chat-collapse-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text-main);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+
+    .chat-collapse-btn:hover {
+      background: var(--loss);
+      border-color: var(--loss);
+      color: #fff;
+    }
+
+    .chat-messages-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      scroll-behavior: smooth;
+    }
+
+    .chat-empty-hint {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      margin: auto 0;
+      padding: 14px;
+      line-height: 1.45;
+    }
+
+    .chat-msg-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      max-width: 100%;
+    }
+
+    .chat-msg-item.mine {
+      flex-direction: row-reverse;
+    }
+
+    .chat-msg-avatar {
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       object-fit: cover;
       border: 1.5px solid var(--gold);
       flex-shrink: 0;
+      cursor: pointer;
+      background: #0d2b1e;
     }
 
-    .spot-owner-pill span {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+    .chat-msg-bubble {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 7px 10px;
+      max-width: 255px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      word-break: break-word;
+    }
+
+    .chat-msg-item.mine .chat-msg-bubble {
+      background: rgba(212, 175, 55, 0.18);
+      border-color: rgba(212, 175, 55, 0.42);
+    }
+
+    .chat-msg-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--gold-bright);
+    }
+
+    .chat-msg-time {
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .chat-msg-text {
+      font-size: 0.83rem;
+      color: var(--text-main);
+      line-height: 1.38;
+      white-space: pre-wrap;
+    }
+
+    .chat-msg-img {
+      max-width: 100%;
+      max-height: 185px;
+      border-radius: 10px;
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      object-fit: contain;
+      background: rgba(0, 0, 0, 0.4);
+      cursor: zoom-in;
+      margin-top: 2px;
+    }
+
+    .chat-staged-bar {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 10px;
+      background: rgba(0, 0, 0, 0.55);
+      border-top: 1px solid rgba(212, 175, 55, 0.25);
+    }
+
+    .chat-staged-bar.active {
+      display: flex;
+    }
+
+    .chat-staged-thumb {
+      height: 44px;
+      max-width: 120px;
+      border-radius: 8px;
+      border: 1px solid var(--gold);
+      object-fit: cover;
+    }
+
+    .chat-input-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 10px;
+      background: rgba(4, 14, 9, 0.95);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .chat-icon-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--gold-bright);
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+
+    .chat-icon-btn:hover {
+      background: rgba(212, 175, 55, 0.22);
+      border-color: var(--gold);
+    }
+
+    .chat-text-input {
+      flex: 1;
+      min-width: 0;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 10px;
+      padding: 7px 10px;
+      color: #fff;
+      font-size: 0.83rem;
+      outline: none;
+    }
+
+    .chat-text-input:focus {
+      border-color: var(--gold-bright);
+    }
+
+    .chat-send-btn {
+      background: linear-gradient(135deg, #f0cf65, #c89d28);
+      color: #091710;
+      border: none;
+      height: 34px;
+      padding: 0 12px;
+      border-radius: 10px;
+      font-weight: 900;
+      font-size: 0.84rem;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* FULLSCREEN IMAGE LIGHTBOX FOR CHAT IMAGES */
+    .image-lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 8, 5, 0.92);
+      backdrop-filter: blur(8px);
+      z-index: 9500;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      cursor: zoom-out;
+    }
+
+    .image-lightbox-overlay.active {
+      display: flex;
+    }
+
+    .image-lightbox-overlay img {
+      max-width: 94vw;
+      max-height: 90vh;
+      border-radius: 14px;
+      border: 2px solid var(--gold);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
     }
 
     .spot-ready-dot {
@@ -2579,7 +2906,7 @@
           <div class="form-fields-col">
             <div class="field-group">
               <label for="profile-name-input">Nombre de jugador</label>
-              <input type="text" id="profile-name-input" class="styled-input" maxlength="18" placeholder="Ej. Alex Royale" />
+              <input type="text" id="profile-name-input" class="styled-input" placeholder="Ej. Alex Royale" />
             </div>
 
             <div class="field-group">
@@ -2706,6 +3033,38 @@
       </div>
     </div>
   </section>
+
+  <!-- FULLSCREEN IMAGE LIGHTBOX -->
+  <div class="image-lightbox-overlay" id="image-lightbox-overlay">
+    <img id="image-lightbox-img" src="" alt="Imagen ampliada" />
+  </div>
+
+  <!-- COLLAPSIBLE CHAT WIDGET (SINGLE BUTTON WHEN CLOSED) -->
+  <button type="button" class="chat-fab-btn" id="btn-toggle-chat" title="Desplegar chat de texto e imágenes">
+    💬 <span>Chat</span>
+    <span class="chat-unread-badge" id="chat-unread-badge" style="display:none;">0</span>
+  </button>
+
+  <aside class="chat-panel-window" id="chat-panel-window" aria-label="Chat de sala">
+    <div class="chat-panel-header">
+      <span>💬 Chat de la Mesa</span>
+      <button type="button" class="chat-collapse-btn" id="btn-collapse-chat" title="Minimizar chat">−</button>
+    </div>
+    <div class="chat-messages-list" id="chat-messages-list">
+      <div class="chat-empty-hint">Envía mensajes o imágenes (también puedes pegar con Ctrl+V).</div>
+    </div>
+    <div class="chat-staged-bar" id="chat-staged-bar">
+      <img id="chat-staged-thumb" class="chat-staged-thumb" src="" alt="Vista previa" />
+      <span style="font-size:0.74rem; color:var(--gold-bright); font-weight:700; flex:1;">Imagen lista para enviar</span>
+      <button type="button" class="mini-btn" id="btn-clear-staged-img" style="padding:3px 8px; color:#ff9c92;">✕</button>
+    </div>
+    <div class="chat-input-bar">
+      <input type="file" id="chat-image-input" accept="image/*" style="display:none;" />
+      <button type="button" class="chat-icon-btn" id="btn-attach-chat-img" title="Adjuntar imagen">🖼️</button>
+      <input type="text" id="chat-text-input" class="chat-text-input" placeholder="Escribe o pega imagen..." autocomplete="off" />
+      <button type="button" class="chat-send-btn" id="btn-send-chat" title="Enviar mensaje">➤</button>
+    </div>
+  </aside>
 
   <script>
     (() => {
@@ -2904,7 +3263,7 @@
         return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(16);
       }
 
-      // Clockwise perimeter positions around the central dealer (used on PC via CSS vars)
+      // Clockwise perimeter positions around the central dealer (expanded left & right)
       function getSpotPerimeterStyle(idx, totalSpots) {
         let deg;
         if (totalSpots === 3) {
@@ -2915,8 +3274,8 @@
           deg = 210 + idx * 40;
         }
         const rad = (deg * Math.PI) / 180;
-        const rx = totalSpots === 3 ? 36 : 40.5;
-        const ry = totalSpots === 3 ? 34 : 34.5;
+        const rx = totalSpots === 3 ? 40.5 : 43.2;
+        const ry = totalSpots === 3 ? 34.5 : 35.5;
         const leftPct = (50 + rx * Math.cos(rad)).toFixed(2);
         const topPct = (52 + ry * Math.sin(rad)).toFixed(2);
         return `--spot-left:${leftPct}%; --spot-top:${topPct}%;`;
@@ -3005,8 +3364,31 @@
       function getPublicProfile() {
         return {
           name: state.profile.name || "Jugador",
-          avatar: state.profile.avatar || PRESET_AVATARS[0]
+          avatar: state.profile.avatar || PRESET_AVATARS[0],
+          balance: roundMoney(state.balance)
         };
+      }
+
+      function getPlayerBalance(playerId) {
+        if (playerId === getMyId()) return roundMoney(state.balance);
+        if (mp.roster[playerId] && typeof mp.roster[playerId].balance === "number") {
+          return roundMoney(mp.roster[playerId].balance);
+        }
+        return 0;
+      }
+
+      function isPlayerSeated(playerId) {
+        return spots.some(s => s.open && s.ownerId === playerId);
+      }
+
+      function getSeatedPlayerIds() {
+        const ids = [];
+        spots.forEach(s => {
+          if (s.open && s.ownerId && !ids.includes(s.ownerId)) {
+            ids.push(s.ownerId);
+          }
+        });
+        return ids;
       }
 
       function isPlayerReady(playerId) {
@@ -3017,6 +3399,7 @@
         const myId = getMyId();
         if (mp.roster[myId]) {
           mp.roster[myId].ready = Boolean(val);
+          mp.roster[myId].balance = roundMoney(state.balance);
         }
       }
 
@@ -3054,19 +3437,12 @@
       }
 
       function initOnlineSpotsAsHost() {
-        const prof = getPublicProfile();
+        // Start with 0 open spots so players can be in the room without occupying any hand, or click '+' to join a hand
         spots = [];
         for (let i = 0; i < ONLINE_SPOTS_COUNT; i++) {
-          const isHostInitial = i === 6; // #7 bottom-center
-          spots.push(createEmptySpot(
-            i,
-            isHostInitial,
-            isHostInitial ? "host" : null,
-            isHostInitial ? prof.name : "",
-            isHostInitial ? prof.avatar : ""
-          ));
+          spots.push(createEmptySpot(i, false, null, "", ""));
         }
-        state.onlineSelectedSpot = 6;
+        state.onlineSelectedSpot = -1;
       }
 
       function getSelectedSpotIdx() {
@@ -3393,18 +3769,23 @@
         }
       }
 
-      // MULTIPLAYER READY LOGIC
+      // MULTIPLAYER READY LOGIC (ONLY SEATED PLAYERS WITH A HAND NEED TO CLICK READY)
       function toggleMyReady() {
         if (!isOnlineMode()) return;
         if ((phase !== "betting" && phase !== "resolved") || isPostRoundPauseActive()) return;
 
         const myId = getMyId();
+        if (!isPlayerSeated(myId)) return; // Spectators without a hand don't need Ready
+
         const currentlyReady = isPlayerReady(myId);
         const nextReady = !currentlyReady;
         SoundFX.playReadyClick(nextReady);
 
         if (mp.role === "guest" && mp.hostConn && mp.hostConn.open) {
-          if (mp.roster[myId]) mp.roster[myId].ready = nextReady;
+          if (mp.roster[myId]) {
+            mp.roster[myId].ready = nextReady;
+            mp.roster[myId].balance = roundMoney(state.balance);
+          }
           mp.hostConn.send({
             type: "GUEST_SET_READY",
             ready: nextReady,
@@ -3426,17 +3807,18 @@
         if (mp.role !== "host") return;
         if (phase !== "betting") return;
 
-        const playerIds = Object.keys(mp.roster);
-        if (playerIds.length === 0) return;
+        const seatedIds = getSeatedPlayerIds();
+        if (seatedIds.length === 0) return;
 
-        const allReady = playerIds.every(id => Boolean(mp.roster[id] && mp.roster[id].ready));
+        const allSeatedReady = seatedIds.every(id => Boolean(mp.roster[id] && mp.roster[id].ready));
         const totalAllSpotsBet = roundMoney(spots.reduce((sum, s) => sum + (s.open ? s.bet : 0), 0));
 
-        if (allReady && totalAllSpotsBet > 0) {
+        if (allSeatedReady && totalAllSpotsBet > 0) {
           if (autoStartPendingTimer) clearTimeout(autoStartPendingTimer);
           autoStartPendingTimer = setTimeout(() => {
             autoStartPendingTimer = null;
-            const stillAllReady = Object.keys(mp.roster).every(id => Boolean(mp.roster[id] && mp.roster[id].ready));
+            const currentSeatedIds = getSeatedPlayerIds();
+            const stillAllReady = currentSeatedIds.length > 0 && currentSeatedIds.every(id => Boolean(mp.roster[id] && mp.roster[id].ready));
             const stillHasBets = roundMoney(spots.reduce((sum, s) => sum + (s.open ? s.bet : 0), 0)) > 0;
             if (stillAllReady && stillHasBets && phase === "betting") {
               startDeal();
@@ -3561,35 +3943,36 @@
         }
         badgesEl.innerHTML = badges.join("");
 
-        // Table spots & bet stats
+        // Table spots, balance & bet stats (balance shown for ALL players)
         const playerSpots = spots.filter(s => s.open && s.ownerId === playerId);
         const spotLabels = playerSpots.length > 0
           ? playerSpots.map(s => `#${s.index + 1}`).join(", ") + ` (${playerSpots.length}/${MAX_SPOTS_PER_PLAYER})`
-          : "Sin huecos";
+          : "Sin mano (espectador)";
         const totalPlayerBet = roundMoney(playerSpots.reduce((sum, s) => {
           if ((phase === "dealing" || phase === "playing" || phase === "dealer") && (s.hands || []).length > 0) {
             return sum + s.hands.reduce((hs, h) => hs + (h.bet || 0), 0);
           }
           return sum + (s.bet || 0);
         }, 0));
+        const pBalance = getPlayerBalance(playerId);
 
         const statsEl = document.getElementById("modal-player-stats");
         let statsHTML = `
           <div class="player-modal-stat-item">
-            <div class="val">${spotLabels}</div>
-            <div class="lbl">Huecos en mesa</div>
+            <div class="val">${formatEuro(pBalance)}</div>
+            <div class="lbl">Dinero disponible</div>
           </div>
           <div class="player-modal-stat-item">
             <div class="val">${formatEuro(totalPlayerBet)}</div>
             <div class="lbl">Apuesta en ronda</div>
           </div>
+          <div class="player-modal-stat-item" style="${playerId === myId ? "" : "grid-column: span 2;"}">
+            <div class="val">${spotLabels}</div>
+            <div class="lbl">Manos en mesa</div>
+          </div>
         `;
         if (playerId === myId) {
           statsHTML += `
-            <div class="player-modal-stat-item">
-              <div class="val">${formatEuro(state.balance)}</div>
-              <div class="lbl">Saldo disponible</div>
-            </div>
             <div class="player-modal-stat-item">
               <div class="val">${state.stats.won} / ${state.stats.played}</div>
               <div class="lbl">Manos ganadas</div>
@@ -3816,7 +4199,8 @@
           mp.hostConn.send({
             type: "GUEST_CLAIM_SPOT",
             spotIdx,
-            profile: prof
+            profile: prof,
+            balance: roundMoney(state.balance)
           });
           return;
         }
@@ -3839,7 +4223,8 @@
         const spot = spots[spotIdx];
         const myId = getMyId();
         if (!spot || !spot.open || spot.ownerId !== myId) return;
-        if (getMyOpenSpots().length <= 1) return;
+        // In solo mode keep at least 1 spot; in online mode allow closing ALL spots (0 hands = spectator)
+        if (!isOnlineMode() && getMyOpenSpots().length <= 1) return;
 
         if (spot.bet > 0) {
           state.balance = roundMoney(state.balance + spot.bet);
@@ -3849,7 +4234,7 @@
 
         if (mp.role === "guest" && mp.hostConn && mp.hostConn.open) {
           saveState();
-          mp.hostConn.send({ type: "GUEST_CLOSE_SPOT", spotIdx });
+          mp.hostConn.send({ type: "GUEST_CLOSE_SPOT", spotIdx, balance: roundMoney(state.balance) });
           render();
           return;
         }
@@ -3861,12 +4246,13 @@
         spot.ownerAvatar = "";
         spot.hands = [];
 
-        if (getSelectedSpotIdx() === spotIdx || getSelectedSpotIdx() === -1) {
-          const nextMine = spots.findIndex(s => s.open && s.ownerId === myId);
-          if (nextMine !== -1) setSelectedSpotIdx(nextMine);
-        }
+        const nextMine = spots.findIndex(s => s.open && s.ownerId === myId);
+        setSelectedSpotIdx(nextMine);
         saveState();
         syncAndRender();
+        if (mp.role === "host") {
+          checkAllPlayersReadyAutoStart();
+        }
       }
 
       function sendGuestBetsToHost() {
@@ -4493,10 +4879,11 @@
               }).join("")}</div>`
             : `<span class="bet-circle-placeholder">${isMine ? "Apostar" : "Libre"}</span>`;
 
-          const canClose = isBettingPhase && isMine && myOpenSpots.length > 1;
+          const canClose = isBettingPhase && isMine && (isOnlineMode() ? myOpenSpots.length >= 1 : myOpenSpots.length > 1);
           const ownerAvatarSrc = isMine ? (state.profile.avatar || PRESET_AVATARS[0]) : (spot.ownerAvatar || PRESET_AVATARS[0]);
           const safeOwnerName = escapeHtml(isMine ? state.profile.name : (spot.ownerName || "Jugador"));
           const ownerLabel = `${safeOwnerName} (#${idx + 1})`;
+          const ownerBalText = formatEuro(getPlayerBalance(spot.ownerId));
           const ownerReady = isOnlineMode() && isPlayerReady(spot.ownerId);
 
           const activeSpotTotalBet = (phase === "dealing" || phase === "playing" || phase === "dealer") && (spot.hands || []).length > 0
@@ -4526,10 +4913,13 @@
               <div class="spot-top-bar">
                 <div class="spot-owner-pill" data-action="view-player" data-player-id="${escapeHtml(spot.ownerId || "")}" title="Ver perfil de ${safeOwnerName}">
                   <img src="${ownerAvatarSrc}" alt="" />
-                  <span>${ownerLabel}</span>
+                  <div class="spot-owner-info">
+                    <span class="spot-owner-name">${ownerLabel}</span>
+                    ${isOnlineMode() ? `<span class="spot-owner-balance">💰 ${ownerBalText}</span>` : ""}
+                  </div>
                   ${isOnlineMode() && isBettingPhase ? `<i class="spot-ready-dot ${ownerReady ? "ok" : ""}" title="${ownerReady ? "Listo" : "Esperando"}"></i>` : ""}
                 </div>
-                ${canClose ? `<button class="close-spot-btn" data-action="close-spot" data-idx="${idx}" title="Cerrar hueco">×</button>` : ""}
+                ${canClose ? `<button class="close-spot-btn" data-action="close-spot" data-idx="${idx}" title="${isOnlineMode() ? "Dejar esta mano" : "Cerrar hueco"}">×</button>` : ""}
               </div>
             </div>
           `;
@@ -4659,29 +5049,37 @@
             forceStartBtn.style.display = "none";
             mpHint.style.display = "none";
           } else {
-            // Online Multiplayer Mode: Ready button for ALL players + Force Start for Host
+            // Online Multiplayer Mode: Only seated players (in at least 1 hand) need to click Ready!
             dealBtn.style.display = "none";
-            readyBtn.style.display = "inline-block";
+            const amISeated = myOpenSpots.length > 0;
+            const seatedIds = getSeatedPlayerIds();
+            const readyCount = seatedIds.filter(id => isPlayerReady(id)).length;
+            const totalSeated = seatedIds.length;
 
-            const amIReady = isPlayerReady(myId);
-            readyBtn.classList.toggle("is-ready-active", amIReady);
-            if (amIReady) {
-              readyBtn.textContent = "✅ LISTO (Cancelar)";
+            if (!amISeated) {
+              readyBtn.style.display = "none";
+              mpHint.style.display = "inline-block";
+              mpHint.textContent = totalSeated > 0
+                ? `👁 Sin mano (espectador) · Listos en mesa: ${readyCount}/${totalSeated}`
+                : "👁 Sin mano (espectador) · Pulsa + en un hueco si quieres jugar";
             } else {
-              readyBtn.textContent = myTableBet > 0
-                ? `✔ DAR A LISTO (${formatEuro(myTableBet)})`
-                : "✔ DAR A LISTO (Pasar)";
-            }
+              readyBtn.style.display = "inline-block";
+              const amIReady = isPlayerReady(myId);
+              readyBtn.classList.toggle("is-ready-active", amIReady);
+              if (amIReady) {
+                readyBtn.textContent = "✅ LISTO (Cancelar)";
+              } else {
+                readyBtn.textContent = myTableBet > 0
+                  ? `✔ DAR A LISTO (${formatEuro(myTableBet)})`
+                  : "✔ DAR A LISTO (Pasar)";
+              }
 
-            const rosterEntries = Object.values(mp.roster);
-            const readyCount = rosterEntries.filter(p => p && p.ready).length;
-            const totalCount = rosterEntries.length;
-
-            mpHint.style.display = "inline-block";
-            if (readyCount === totalCount && totalAllSpotsBet <= 0) {
-              mpHint.textContent = "Coloca al menos una apuesta en la mesa para empezar";
-            } else {
-              mpHint.textContent = `Esperando a todos (${readyCount}/${totalCount} listos)`;
+              mpHint.style.display = "inline-block";
+              if (readyCount === totalSeated && totalAllSpotsBet <= 0) {
+                mpHint.textContent = "Coloca al menos una apuesta en la mesa para empezar";
+              } else {
+                mpHint.textContent = `Esperando jugadores en mano (${readyCount}/${totalSeated} listos)`;
+              }
             }
 
             if (mp.role === "host") {
@@ -4717,14 +5115,17 @@
         strip.classList.add("active");
 
         const entries = Object.entries(mp.roster);
-        const readyCount = entries.filter(([, p]) => p && p.ready).length;
-        counterEl.textContent = `Listos: ${readyCount}/${entries.length}`;
+        const seatedIds = getSeatedPlayerIds();
+        const readyCount = seatedIds.filter(id => isPlayerReady(id)).length;
+        counterEl.textContent = `Listos en mesa: ${readyCount}/${seatedIds.length}`;
 
         container.innerHTML = entries.map(([id, prof]) => {
           const isHostUser = id === "host";
-          const isReady = Boolean(prof && prof.ready);
+          const seated = isPlayerSeated(id);
+          const isReady = seated && Boolean(prof && prof.ready);
           const safeName = escapeHtml((prof && prof.name) || "Jugador");
           const avatarSrc = (prof && prof.avatar) || PRESET_AVATARS[0];
+          const balText = formatEuro(getPlayerBalance(id));
           const canKick = mp.role === "host" && !isHostUser;
 
           return `
@@ -4732,7 +5133,10 @@
               <button type="button" class="mp-strip-player-btn" data-view-player-id="${escapeHtml(id)}" title="Ver perfil de ${safeName}">
                 <img src="${avatarSrc}" alt="" />
                 <span>${isHostUser ? "👑 " : ""}${safeName}</span>
-                <span class="ready-tag ${isReady ? "ok" : ""}">${isReady ? "✓ Listo" : "⏳"}</span>
+                <span class="player-balance-tag">💰 ${balText}</span>
+                ${seated
+                  ? `<span class="ready-tag ${isReady ? "ok" : ""}">${isReady ? "✓ Listo" : "⏳"}</span>`
+                  : `<span class="ready-tag" style="opacity:0.75;">👁 Sin mano</span>`}
               </button>
               ${canKick ? `<button type="button" class="mini-kick-btn" data-kick-player-id="${escapeHtml(id)}" title="Expulsar a ${safeName}">Expulsar</button>` : ""}
             </div>
@@ -4821,16 +5225,20 @@
         list.innerHTML = entries.map(([id, prof]) => {
           const count = spots.filter(s => s.open && s.ownerId === id).length;
           const isHostUser = id === "host";
-          const isReady = Boolean(prof && prof.ready);
+          const isReady = count > 0 && Boolean(prof && prof.ready);
           const safeName = escapeHtml((prof && prof.name) || "Jugador");
           const avatarSrc = (prof && prof.avatar) || PRESET_AVATARS[0];
+          const balText = formatEuro(getPlayerBalance(id));
           const canKick = mp.role === "host" && !isHostUser;
 
           return `
             <div class="player-badge-mp" style="cursor:pointer;" data-roster-view-id="${escapeHtml(id)}">
               <img src="${avatarSrc}" alt="" />
               <span>${isHostUser ? "👑 " : ""}${safeName} (${count}/3)</span>
-              <span class="ready-tag ${isReady ? "ok" : ""}">${isReady ? "✓ Listo" : "⏳"}</span>
+              <span class="player-balance-tag">💰 ${balText}</span>
+              ${count > 0
+                ? `<span class="ready-tag ${isReady ? "ok" : ""}">${isReady ? "✓ Listo" : "⏳"}</span>`
+                : `<span class="ready-tag" style="opacity:0.75;">👁 Sin mano</span>`}
               ${canKick ? `<button type="button" class="mini-kick-btn" data-roster-kick-id="${escapeHtml(id)}">Expulsar</button>` : ""}
             </div>
           `;
@@ -4839,6 +5247,9 @@
 
       // MULTIPLAYER PEERJS SYNC
       function syncAndRender() {
+        if (mp.role === "host" && mp.roster.host) {
+          mp.roster.host.balance = roundMoney(state.balance);
+        }
         render();
         if (mp.role === "host" && mp.connections.length > 0) {
           const payload = {
@@ -4885,7 +5296,7 @@
           mp.connections = [];
           const hostProf = getPublicProfile();
           mp.roster = {
-            host: { name: hostProf.name, avatar: hostProf.avatar, ready: false, isHost: true }
+            host: { name: hostProf.name, avatar: hostProf.avatar, balance: roundMoney(state.balance), ready: false, isHost: true }
           };
 
           phase = "betting";
@@ -4914,32 +5325,46 @@
               if (!data || typeof data !== "object") return;
 
               if (data.type === "HELLO") {
-                const prof = data.profile || { name: "Invitado", avatar: PRESET_AVATARS[1] };
+                const prof = data.profile || { name: "Invitado", avatar: PRESET_AVATARS[1], balance: 1000 };
                 mp.roster[conn.peer] = {
                   name: prof.name || "Invitado",
                   avatar: prof.avatar || PRESET_AVATARS[1],
+                  balance: typeof prof.balance === "number" ? roundMoney(prof.balance) : 1000,
                   ready: false,
                   isHost: false
                 };
-                const existing = spots.filter(s => s.open && s.ownerId === conn.peer);
-                if (existing.length === 0) {
-                  const freeIdx = spots.findIndex(s => !s.open);
-                  if (freeIdx !== -1) {
-                    spots[freeIdx].open = true;
-                    spots[freeIdx].ownerId = conn.peer;
-                    spots[freeIdx].ownerName = prof.name || "Invitado";
-                    spots[freeIdx].ownerAvatar = prof.avatar || PRESET_AVATARS[1];
-                    spots[freeIdx].bet = 0;
-                    spots[freeIdx].hands = [];
-                  }
+                // Guest enters with 0 hands (spectator) and can click '+' on any open seat when desired
+                if (conn.open && chatMessages.length > 0) {
+                  try { conn.send({ type: "CHAT_HISTORY", messages: chatMessages }); } catch (e) {}
                 }
                 syncAndRender();
+              } else if (data.type === "GUEST_BALANCE_UPDATE") {
+                if (mp.roster[conn.peer] && typeof data.balance === "number") {
+                  mp.roster[conn.peer].balance = roundMoney(data.balance);
+                  syncAndRender();
+                }
+              } else if (data.type === "CHAT_MESSAGE") {
+                const senderProf = mp.roster[conn.peer] || { name: "Invitado", avatar: PRESET_AVATARS[1] };
+                const msgObj = {
+                  id: String(data.msgId || ("m_" + Date.now() + "_" + Math.random().toString(36).slice(2, 7))),
+                  senderId: conn.peer,
+                  senderName: senderProf.name || "Invitado",
+                  senderAvatar: senderProf.avatar || PRESET_AVATARS[1],
+                  text: typeof data.text === "string" ? data.text.slice(0, 2000) : "",
+                  imageData: (typeof data.imageData === "string" && data.imageData.startsWith("data:image/")) ? data.imageData : "",
+                  ts: data.ts || Date.now()
+                };
+                if (msgObj.text || msgObj.imageData) {
+                  receiveChatMessage(msgObj, true);
+                }
               } else if (data.type === "GUEST_PROFILE_UPDATE") {
                 const prof = data.profile || { name: "Invitado", avatar: PRESET_AVATARS[1] };
                 const prevReady = Boolean(mp.roster[conn.peer] && mp.roster[conn.peer].ready);
+                const prevBal = mp.roster[conn.peer] ? mp.roster[conn.peer].balance : 1000;
                 mp.roster[conn.peer] = {
                   name: prof.name || "Invitado",
                   avatar: prof.avatar || PRESET_AVATARS[1],
+                  balance: typeof prof.balance === "number" ? roundMoney(prof.balance) : prevBal,
                   ready: prevReady,
                   isHost: false
                 };
@@ -4958,6 +5383,7 @@
                   mp.roster[conn.peer] = {
                     name: (prof && prof.name) || "Invitado",
                     avatar: (prof && prof.avatar) || PRESET_AVATARS[1],
+                    balance: (prof && typeof prof.balance === "number") ? roundMoney(prof.balance) : 1000,
                     ready: Boolean(data.ready),
                     isHost: false
                   };
@@ -4965,6 +5391,7 @@
                   if (prof) {
                     mp.roster[conn.peer].name = prof.name || mp.roster[conn.peer].name;
                     mp.roster[conn.peer].avatar = prof.avatar || mp.roster[conn.peer].avatar;
+                    if (typeof prof.balance === "number") mp.roster[conn.peer].balance = roundMoney(prof.balance);
                   }
                   mp.roster[conn.peer].ready = Boolean(data.ready);
                 }
@@ -4978,9 +5405,11 @@
                 if (count >= MAX_SPOTS_PER_PLAYER) return;
 
                 const prof = data.profile || mp.roster[conn.peer] || { name: "Invitado", avatar: PRESET_AVATARS[1] };
+                const prevBal = mp.roster[conn.peer] ? mp.roster[conn.peer].balance : 1000;
                 mp.roster[conn.peer] = {
                   name: prof.name || "Invitado",
                   avatar: prof.avatar || PRESET_AVATARS[1],
+                  balance: typeof data.balance === "number" ? roundMoney(data.balance) : (typeof prof.balance === "number" ? roundMoney(prof.balance) : prevBal),
                   ready: false,
                   isHost: false
                 };
@@ -4997,7 +5426,10 @@
                 const idx = Number(data.spotIdx);
                 if (idx < 0 || idx >= spots.length) return;
                 if (!spots[idx].open || spots[idx].ownerId !== conn.peer) return;
-                if (mp.roster[conn.peer]) mp.roster[conn.peer].ready = false;
+                if (mp.roster[conn.peer]) {
+                  mp.roster[conn.peer].ready = false;
+                  if (typeof data.balance === "number") mp.roster[conn.peer].balance = roundMoney(data.balance);
+                }
                 prepareForNewBetsIfResolved();
                 spots[idx].open = false;
                 spots[idx].ownerId = null;
@@ -5006,14 +5438,17 @@
                 spots[idx].bet = 0;
                 spots[idx].hands = [];
                 syncAndRender();
+                checkAllPlayersReadyAutoStart();
               } else if (data.type === "GUEST_UPDATE_BETS") {
                 if ((phase !== "betting" && phase !== "resolved") || isPostRoundPauseActive()) return;
                 prepareForNewBetsIfResolved();
                 const prof = data.profile || mp.roster[conn.peer];
+                const prevBal = mp.roster[conn.peer] ? mp.roster[conn.peer].balance : 1000;
                 if (prof) {
                   mp.roster[conn.peer] = {
                     name: prof.name || "Invitado",
                     avatar: prof.avatar || PRESET_AVATARS[1],
+                    balance: typeof prof.balance === "number" ? roundMoney(prof.balance) : prevBal,
                     ready: Boolean(data.ready),
                     isHost: false
                   };
@@ -5034,6 +5469,9 @@
                 syncAndRender();
                 checkAllPlayersReadyAutoStart();
               } else if (data.type === "GUEST_ACTION") {
+                if (mp.roster[conn.peer] && typeof data.balance === "number") {
+                  mp.roster[conn.peer].balance = roundMoney(data.balance);
+                }
                 if (data.action === "hit") executeHitForActor(conn.peer);
                 else if (data.action === "stand") executeStandForActor(conn.peer);
                 else if (data.action === "double") executeDoubleForActor(conn.peer, Number(data.extraBet));
@@ -5105,7 +5543,7 @@
             mp.hostConn = conn;
             const myProf = getPublicProfile();
             mp.roster = {
-              [myId]: { name: myProf.name, avatar: myProf.avatar, ready: false, isHost: false }
+              [myId]: { name: myProf.name, avatar: myProf.avatar, balance: roundMoney(state.balance), ready: false, isHost: false }
             };
 
             document.getElementById("mp-status-dot").classList.add("online");
@@ -5126,6 +5564,17 @@
                 leaveMultiplayer();
                 document.getElementById("mp-feedback").textContent = `🚫 ${reason}`;
                 switchView("mp-view");
+                return;
+              }
+
+              if (data.type === "CHAT_BROADCAST" && data.message) {
+                receiveChatMessage(data.message, false);
+                return;
+              }
+
+              if (data.type === "CHAT_HISTORY" && Array.isArray(data.messages)) {
+                chatMessages = data.messages.slice(-60);
+                renderChatMessages();
                 return;
               }
 
@@ -5220,6 +5669,9 @@
                 deferredKeepBetApplied = false;
 
                 saveState();
+                if (mp.hostConn && mp.hostConn.open) {
+                  try { mp.hostConn.send({ type: "GUEST_BALANCE_UPDATE", balance: roundMoney(state.balance) }); } catch (e) {}
+                }
                 render();
               }
             } catch (err) {
@@ -5521,7 +5973,12 @@
         }
         saveState();
         if (mp.role === "host") syncAndRender();
-        else render();
+        else {
+          if (mp.role === "guest" && mp.hostConn && mp.hostConn.open) {
+            try { mp.hostConn.send({ type: "GUEST_BALANCE_UPDATE", balance: roundMoney(state.balance) }); } catch (e) {}
+          }
+          render();
+        }
       });
 
       document.getElementById("btn-repeat-bet").addEventListener("click", () => {
@@ -5604,7 +6061,7 @@
           state.balance = roundMoney(state.balance - extraBet);
           saveState();
           disableAllPlayButtons();
-          mp.hostConn.send({ type: "GUEST_ACTION", action: "double", extraBet });
+          mp.hostConn.send({ type: "GUEST_ACTION", action: "double", extraBet, balance: roundMoney(state.balance) });
           render();
           return;
         }
@@ -5623,7 +6080,7 @@
           state.balance = roundMoney(state.balance - extraBet);
           saveState();
           disableAllPlayButtons();
-          mp.hostConn.send({ type: "GUEST_ACTION", action: "split", extraBet });
+          mp.hostConn.send({ type: "GUEST_ACTION", action: "split", extraBet, balance: roundMoney(state.balance) });
           render();
           return;
         }
@@ -5818,6 +6275,264 @@
       });
       window.addEventListener("pagehide", saveState);
       window.addEventListener("beforeunload", saveState);
+
+      // ============================================================
+      // COLLAPSIBLE CHAT SYSTEM (TEXT + IMAGES)
+      // ============================================================
+      let chatMessages = [];
+      let chatIsOpen = false;
+      let unreadChatCount = 0;
+      let stagedChatImageData = "";
+
+      function formatChatTime(ts) {
+        try {
+          const d = new Date(ts || Date.now());
+          return d.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" });
+        } catch (e) {
+          return "";
+        }
+      }
+
+      function updateChatToggleUI() {
+        const fabBtn = document.getElementById("btn-toggle-chat");
+        const panelEl = document.getElementById("chat-panel-window");
+        const badgeEl = document.getElementById("chat-unread-badge");
+
+        if (chatIsOpen) {
+          fabBtn.classList.add("hidden-when-open");
+          panelEl.classList.add("open");
+          unreadChatCount = 0;
+          badgeEl.style.display = "none";
+          badgeEl.textContent = "0";
+          const listEl = document.getElementById("chat-messages-list");
+          listEl.scrollTop = listEl.scrollHeight;
+        } else {
+          fabBtn.classList.remove("hidden-when-open");
+          panelEl.classList.remove("open");
+          if (unreadChatCount > 0) {
+            badgeEl.style.display = "inline-block";
+            badgeEl.textContent = unreadChatCount > 99 ? "99+" : String(unreadChatCount);
+          } else {
+            badgeEl.style.display = "none";
+          }
+        }
+      }
+
+      function renderChatMessages() {
+        const listEl = document.getElementById("chat-messages-list");
+        if (!listEl) return;
+
+        if (chatMessages.length === 0) {
+          listEl.innerHTML = `<div class="chat-empty-hint">Envía mensajes o imágenes (también puedes pegar con Ctrl+V).</div>`;
+          return;
+        }
+
+        const myId = getMyId();
+        listEl.innerHTML = chatMessages.map(m => {
+          const isMine = m.senderId === myId;
+          const safeName = escapeHtml(m.senderName || "Jugador");
+          const avatarSrc = m.senderAvatar || PRESET_AVATARS[0];
+          const timeStr = formatChatTime(m.ts);
+          const textHTML = m.text ? `<div class="chat-msg-text">${escapeHtml(m.text)}</div>` : "";
+          const imgHTML = m.imageData ? `<img class="chat-msg-img" src="${m.imageData}" alt="Imagen enviada" data-zoom-img="${m.imageData}" />` : "";
+
+          return `
+            <div class="chat-msg-item ${isMine ? "mine" : ""}">
+              <img class="chat-msg-avatar" src="${avatarSrc}" alt="" data-chat-profile-id="${escapeHtml(m.senderId || "")}" title="Ver perfil de ${safeName}" />
+              <div class="chat-msg-bubble">
+                <div class="chat-msg-meta">
+                  <span style="cursor:pointer;" data-chat-profile-id="${escapeHtml(m.senderId || "")}">${safeName}</span>
+                  <span class="chat-msg-time">${timeStr}</span>
+                </div>
+                ${textHTML}
+                ${imgHTML}
+              </div>
+            </div>
+          `;
+        }).join("");
+
+        listEl.scrollTop = listEl.scrollHeight;
+      }
+
+      function receiveChatMessage(msgObj, rebroadcastAsHost = false) {
+        if (!msgObj || !msgObj.id) return;
+        if (chatMessages.some(existing => existing.id === msgObj.id)) return;
+
+        chatMessages.push(msgObj);
+        if (chatMessages.length > 60) {
+          chatMessages = chatMessages.slice(-60);
+        }
+
+        if (rebroadcastAsHost && mp.role === "host") {
+          mp.connections.forEach(conn => {
+            if (conn.open) {
+              try { conn.send({ type: "CHAT_BROADCAST", message: msgObj }); } catch (e) {}
+            }
+          });
+        }
+
+        if (!chatIsOpen && msgObj.senderId !== getMyId()) {
+          unreadChatCount++;
+          SoundFX.playTick(false);
+        }
+
+        renderChatMessages();
+        updateChatToggleUI();
+      }
+
+      function stageChatImageFile(file) {
+        if (!file || !file.type || !file.type.startsWith("image/")) return;
+        const reader = new FileReader();
+        reader.onload = ev => {
+          const img = new Image();
+          img.onload = () => {
+            const maxDim = 540;
+            let w = img.width;
+            let h = img.height;
+            if (w > maxDim || h > maxDim) {
+              if (w >= h) {
+                h = Math.round((h * maxDim) / w);
+                w = maxDim;
+              } else {
+                w = Math.round((w * maxDim) / h);
+                h = maxDim;
+              }
+            }
+            const canvas = document.createElement("canvas");
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, w, h);
+
+            stagedChatImageData = canvas.toDataURL("image/jpeg", 0.78);
+            document.getElementById("chat-staged-thumb").src = stagedChatImageData;
+            document.getElementById("chat-staged-bar").classList.add("active");
+          };
+          img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+
+      function clearStagedChatImage() {
+        stagedChatImageData = "";
+        document.getElementById("chat-staged-thumb").src = "";
+        document.getElementById("chat-staged-bar").classList.remove("active");
+        document.getElementById("chat-image-input").value = "";
+      }
+
+      function sendChatMessage() {
+        const inputEl = document.getElementById("chat-text-input");
+        const text = inputEl.value.trim();
+        const imgData = stagedChatImageData;
+
+        if (!text && !imgData) return;
+
+        const myId = getMyId();
+        const prof = getPublicProfile();
+        const msgId = "msg_" + Date.now() + "_" + Math.random().toString(36).slice(2, 7);
+        const ts = Date.now();
+
+        const msgObj = {
+          id: msgId,
+          senderId: myId,
+          senderName: prof.name,
+          senderAvatar: prof.avatar,
+          text,
+          imageData: imgData,
+          ts
+        };
+
+        inputEl.value = "";
+        clearStagedChatImage();
+
+        if (mp.role === "guest" && mp.hostConn && mp.hostConn.open) {
+          receiveChatMessage(msgObj, false);
+          try {
+            mp.hostConn.send({
+              type: "CHAT_MESSAGE",
+              msgId,
+              text,
+              imageData: imgData,
+              ts
+            });
+          } catch (e) {}
+        } else if (mp.role === "host") {
+          receiveChatMessage(msgObj, true);
+        } else {
+          // Solo mode local chat
+          receiveChatMessage(msgObj, false);
+        }
+      }
+
+      document.getElementById("btn-toggle-chat").addEventListener("click", () => {
+        chatIsOpen = true;
+        updateChatToggleUI();
+        setTimeout(() => document.getElementById("chat-text-input").focus(), 50);
+      });
+
+      document.getElementById("btn-collapse-chat").addEventListener("click", () => {
+        chatIsOpen = false;
+        updateChatToggleUI();
+      });
+
+      document.getElementById("btn-attach-chat-img").addEventListener("click", () => {
+        document.getElementById("chat-image-input").click();
+      });
+
+      document.getElementById("chat-image-input").addEventListener("change", e => {
+        if (e.target.files && e.target.files[0]) {
+          stageChatImageFile(e.target.files[0]);
+        }
+      });
+
+      document.getElementById("btn-clear-staged-img").addEventListener("click", clearStagedChatImage);
+
+      document.getElementById("btn-send-chat").addEventListener("click", sendChatMessage);
+
+      document.getElementById("chat-text-input").addEventListener("keydown", e => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          sendChatMessage();
+        }
+      });
+
+      // Support pasting images directly into chat input
+      document.getElementById("chat-text-input").addEventListener("paste", e => {
+        const items = e.clipboardData && e.clipboardData.items;
+        if (!items) return;
+        for (let i = 0; i < items.length; i++) {
+          if (items[i].type.startsWith("image/")) {
+            const file = items[i].getAsFile();
+            if (file) {
+              e.preventDefault();
+              stageChatImageFile(file);
+              break;
+            }
+          }
+        }
+      });
+
+      // Delegated clicks inside chat messages (zoom image or open player profile)
+      document.getElementById("chat-messages-list").addEventListener("click", e => {
+        const zoomImg = e.target.closest("[data-zoom-img]");
+        if (zoomImg) {
+          const src = zoomImg.getAttribute("data-zoom-img");
+          if (src) {
+            document.getElementById("image-lightbox-img").src = src;
+            document.getElementById("image-lightbox-overlay").classList.add("active");
+          }
+          return;
+        }
+        const profEl = e.target.closest("[data-chat-profile-id]");
+        if (profEl) {
+          const pid = profEl.getAttribute("data-chat-profile-id");
+          if (pid) openPlayerProfileModal(pid);
+        }
+      });
+
+      document.getElementById("image-lightbox-overlay").addEventListener("click", () => {
+        document.getElementById("image-lightbox-overlay").classList.remove("active");
+      });
 
       // BOOT
       setupPresetAvatars();
