@@ -1,13 +1,13 @@
 # Blackjack Americano — Mesa Royale
 
-Aplicación web de **Blackjack Americano** lista para alojar gratis en **GitHub Pages**, con dividir pareja (**Split**), **Doblar tras dividir (DAS)**, modo individual (hasta 3 manos), **salas multijugador P2P de 9 huecos** (máximo 3 manos por jugador) y **perfil personalizable** con foto, nombre y contraseña.
+Aplicación web de **Blackjack Americano** lista para alojar gratis en **GitHub Pages**, con mesa circular y turnos en sentido horario, temporizador por turno con plantado automático, pausa de resumen de ganancias tras cada ronda, animaciones, efectos de sonido sintetizados, dividir pareja (**Split**), **Doblar tras dividir (DAS)** y **salas multijugador P2P de 9 huecos**.
 
-## Reglas de Dividir (Split) implementadas
+## Novedades incluidas
 
-- **Parejas del mismo valor**: Puedes dividir cualquier pareja de dos cartas iniciales del mismo valor (incluidas parejas de figuras/dieces como `K-Q` o `10-J`), colocando una segunda apuesta idéntica.
-- **Ases divididos (`A-A`)**: Al dividir Ases, cada As recibe exactamente **1 carta adicional** y se planta automáticamente (sin re-dividir Ases ni doblar).
-- **21 tras dividir**: Alcanzar 21 en una mano dividida paga **1:1** (victoria normal, no Blackjack natural 3:2).
-- **Doblar tras dividir (DAS)**: Permitido en cualquier mano dividida que no sea de Ases (hasta 4 manos divididas por hueco).
+- **Mesa circular en sentido horario**: Las cartas del crupier se sitúan en el centro de la mesa y los puestos de los jugadores (3 en solitario o 9 en sala online) se distribuyen alrededor avanzando en **sentido horario**.
+- **Temporizador por turno (`10s / 15s / 20s / 30s`)**: Cuenta atrás visual en cada turno; si el tiempo se agota, la mano se planta automáticamente.
+- **Pausa de resumen post-ronda (~5 segundos)**: Al terminar cada ronda se muestra un panel con el balance neto ganado/perdido, total apostado, cobrado y el desglose por mano (con opción de saltar a la siguiente ronda al instante).
+- **Animaciones y sonidos**: Reparto secuencial de cartas, volteo 3D de la carta oculta del crupier, fichas animadas y efectos de sonido mediante Web Audio API (con botón para activar/silenciar).
 
 ## Cómo subirlo a GitHub Pages
 
