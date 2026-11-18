@@ -2649,6 +2649,24 @@
         grid-template-columns: 1fr;
       }
     }
+    /* ---- FIXES ---- */
+    /* Reserve room at the bottom so the floating chat button never covers the control dock */
+    body { padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px)); }
+    .brand img { width: 34px; height: 34px; object-fit: contain; flex-shrink: 0; }
+    /* Long player names must not spill out of the seat */
+    .spot-owner-pill { max-width: 100%; min-width: 0; }
+    .spot-owner-info { min-width: 0; }
+    .spot-owner-name { display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    @media (min-width: 761px) {
+      .spots-ring.online-9 .spot-slot { width: clamp(118px, 15.5vw, 205px); min-width: 0; max-width: none; }
+    }
+    /* Desktop: lift the dealer a bit so the lowest seat never touches the dealer's rules text */
+    @media (min-width: 761px) {
+      .dealer-center-hub { top: 47%; }
+    }
+    @media (max-width: 760px) {
+      .chat-fab-btn { bottom: 12px; right: 12px; padding: 10px 14px; }
+    }
   </style>
 </head>
 <body>
@@ -2681,7 +2699,7 @@
 
   <header>
     <div class="brand">
-      <img src="./favicon.svg" alt="Blackjack Icon" />
+      <img src="./favicon.svg" alt="Blackjack Icon" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Ccircle cx=%2232%22 cy=%2232%22 r=%2230%22 fill=%22%230d3b27%22 stroke=%22%23d4af37%22 stroke-width=%223%22/%3E%3Ctext x=%2232%22 y=%2245%22 font-size=%2234%22 text-anchor=%22middle%22 fill=%22%23f6df8d%22%3E%E2%99%A0%3C/text%3E%3C/svg%3E';" />
       <div>
         <span class="brand-title">BLACKJACK AMERICANO</span>
         <span class="brand-sub" id="header-mode-subtitle">Mesa Circular · Sentido Horario · Paga 3:2</span>
@@ -3264,7 +3282,20 @@
       }
 
       // Clockwise perimeter positions around the central dealer (expanded left & right)
+      // 9-seat table: explicit layout (left%, top%) so that seats with cards never overlap each other.
+      // Same clockwise order as before: #1..#4 across the top, #5 right, #6..#8 along the bottom (#7 bottom-centre), #9 left.
+      const ONLINE_SEAT_LAYOUT = [
+        [25, 17.5], [41.67, 17.5], [58.33, 17.5], [75, 17.5],
+        [91.5, 51],
+        [70, 83], [50, 83], [30, 83],
+        [8.5, 51]
+      ];
+
       function getSpotPerimeterStyle(idx, totalSpots) {
+        if (totalSpots !== 3 && ONLINE_SEAT_LAYOUT[idx]) {
+          const [lx, ty] = ONLINE_SEAT_LAYOUT[idx];
+          return `--spot-left:${lx}%; --spot-top:${ty}%;`;
+        }
         let deg;
         if (totalSpots === 3) {
           const soloAngles = [184, -4, 90]; // Left -> Right -> Bottom (clockwise)
@@ -3277,7 +3308,8 @@
         const rx = totalSpots === 3 ? 40.5 : 43.2;
         const ry = totalSpots === 3 ? 34.5 : 35.5;
         const leftPct = (50 + rx * Math.cos(rad)).toFixed(2);
-        const topPct = (52 + ry * Math.sin(rad)).toFixed(2);
+        // Clamp so the lowest seat (cards + chips + name pill) stays inside the felt instead of sliding under the control dock
+        const topPct = Math.min(81, 52 + ry * Math.sin(rad)).toFixed(2);
         return `--spot-left:${leftPct}%; --spot-top:${topPct}%;`;
       }
 
@@ -3576,7 +3608,14 @@
         try {
           if (!isOnlineMode() && spots.length === SOLO_SPOTS_COUNT) {
             state.soloActiveSpots = spots.map(s => Boolean(s.open));
-            state.soloPendingBets = spots.map(s => roundMoney(s.bet || 0));
+            const inPlay = (phase === "dealing" || phase === "playing" || phase === "dealer");
+            state.soloPendingBets = spots.map(s => {
+              if (inPlay && (s.hands || []).length > 0) {
+                // doubles and splits already left the balance, so they must be recoverable too
+                return roundMoney(s.hands.reduce((sum, h) => sum + (h.bet || 0), 0));
+              }
+              return roundMoney(s.bet || 0);
+            });
           }
           const serialized = JSON.stringify(state);
           try {
@@ -3602,28 +3641,61 @@
       }
 
       // Shoe & Hand Evaluation
-      function buildAndShuffleShoe(playAudio = true) {
+      let cardUidCounter = 0;
+
+      // Unbiased random integer in [0, max) -- rejection sampling removes the modulo bias of `x % n`
+      function secureRandomInt(max) {
+        if (max <= 1) return 0;
+        if (window.crypto && window.crypto.getRandomValues) {
+          const arr = new Uint32Array(1);
+          const limit = Math.floor(0x100000000 / max) * max;
+          do {
+            window.crypto.getRandomValues(arr);
+          } while (arr[0] >= limit);
+          return arr[0] % max;
+        }
+        return Math.floor(Math.random() * max);
+      }
+
+      function getShuffleThreshold() {
+        return isOnlineMode() ? 104 : 78; // cut card at ~25% of the shoe
+      }
+
+      // Fresh shuffled shoe. `excludeCards` (cards currently on the table) are removed so that
+      // an emergency reshuffle can never put a card that is already in play back into the shoe.
+      function createShuffledShoe(excludeCards = []) {
         const numDecks = isOnlineMode() ? 8 : 6;
+        const toRemove = {};
+        excludeCards.forEach(c => {
+          if (!c) return;
+          const k = c.rank + c.suit;
+          toRemove[k] = (toRemove[k] || 0) + 1;
+        });
         const deck = [];
         for (let d = 0; d < numDecks; d++) {
           for (const suit of SUITS) {
             for (const rank of RANKS) {
-              deck.push({ rank, suit: suit.symbol, color: suit.color, animNew: true });
+              const k = rank + suit.symbol;
+              if (toRemove[k] > 0) { toRemove[k]--; continue; }
+              deck.push({ uid: ++cardUidCounter, rank, suit: suit.symbol, color: suit.color });
             }
           }
         }
         for (let i = deck.length - 1; i > 0; i--) {
-          let j;
-          if (window.crypto && window.crypto.getRandomValues) {
-            const arr = new Uint32Array(1);
-            window.crypto.getRandomValues(arr);
-            j = arr[0] % (i + 1);
-          } else {
-            j = Math.floor(Math.random() * (i + 1));
-          }
+          const j = secureRandomInt(i + 1);
           [deck[i], deck[j]] = [deck[j], deck[i]];
         }
-        shoe = deck;
+        return deck;
+      }
+
+      function getCardsOnTable() {
+        const cards = [...dealer.cards];
+        spots.forEach(s => (s.hands || []).forEach(h => cards.push(...(h.cards || []))));
+        return cards;
+      }
+
+      function buildAndShuffleShoe(playAudio = true, excludeCards = []) {
+        shoe = createShuffledShoe(excludeCards);
         if (playAudio) {
           SoundFX.playShuffle();
           if (mp.role === "host" && mp.connections.length > 0) {
@@ -3646,9 +3718,11 @@
       }
 
       function drawCard() {
-        const threshold = isOnlineMode() ? 104 : 78;
-        if (shoe.length < threshold) {
-          buildAndShuffleShoe();
+        // The cut card is only honoured BETWEEN rounds (see startDeal). Re-shuffling in the middle of a
+        // round put the cards already on the table back into the shoe. Only an empty shoe forces a rebuild,
+        // and in that case the cards in play are excluded.
+        if (shoe.length === 0) {
+          buildAndShuffleShoe(true, getCardsOnTable());
         }
         clearCardAnimFlags();
         const card = shoe.pop();
@@ -4291,6 +4365,10 @@
         const bettingSpots = spots.filter(s => s.open && s.bet > 0);
         if (bettingSpots.length === 0) return;
 
+        if (shoe.length < getShuffleThreshold()) {
+          buildAndShuffleShoe(true);
+        }
+
         clearAllScheduledTimers();
         postRoundDeadline = 0;
         roundSummary = null;
@@ -4341,11 +4419,19 @@
 
         dealSteps.forEach((step, idx) => {
           scheduleAction(() => {
-            const card = drawCard();
-            SoundFX.playCardSlide();
             if (step.target === "spot") {
-              spots[step.spotIdx].hands[0].cards.push(card);
+              const dealtHand = spots[step.spotIdx] && spots[step.spotIdx].hands && spots[step.spotIdx].hands[0];
+              if (!dealtHand) {
+                // the player left / was kicked during the deal: skip their card but keep the round going
+                if (idx === dealSteps.length - 1) scheduleAction(finalizeInitialDeal, 450);
+                return;
+              }
+              const card = drawCard();
+              SoundFX.playCardSlide();
+              dealtHand.cards.push(card);
             } else {
+              const card = drawCard();
+              SoundFX.playCardSlide();
               dealer.cards.push(card);
             }
             syncAndRender();
@@ -4459,23 +4545,24 @@
         advanceToNextPlayableTurn(activeTurnSpot, activeTurnHand);
       }
 
+      // Returns true when the double was applied (guests are refunded by the caller when it returns false)
       function executeDoubleForActor(actorId, verifiedExtraBet = null) {
-        if (phase !== "playing") return;
-        if (activeTurnSpot < 0 || activeTurnSpot >= spots.length) return;
+        if (phase !== "playing") return false;
+        if (activeTurnSpot < 0 || activeTurnSpot >= spots.length) return false;
         const spot = spots[activeTurnSpot];
-        if (!spot || !spot.open) return;
-        if (isOnlineMode() && spot.ownerId !== actorId) return;
+        if (!spot || !spot.open) return false;
+        if (isOnlineMode() && spot.ownerId !== actorId) return false;
 
         const hand = spot.hands[activeTurnHand];
-        if (!hand || hand.status !== "playing" || hand.fromSplitAces || hand.cards.length !== 2) return;
+        if (!hand || hand.status !== "playing" || hand.fromSplitAces || hand.cards.length !== 2) return false;
 
         const extraBet = hand.bet;
         if (actorId === "local" || actorId === "host") {
-          if (state.balance < extraBet) return;
+          if (state.balance < extraBet) return false;
           state.balance = roundMoney(state.balance - extraBet);
           saveState();
         } else {
-          if (verifiedExtraBet !== null && Math.abs(verifiedExtraBet - extraBet) > 0.01) return;
+          if (!Number.isFinite(verifiedExtraBet) || Math.abs(verifiedExtraBet - extraBet) > 0.01) return false;
         }
 
         SoundFX.playChipClick();
@@ -4486,28 +4573,30 @@
         hand.status = ev.total > 21 ? "busted" : "stood";
         if (ev.total > 21) SoundFX.playLoss();
         advanceToNextPlayableTurn(activeTurnSpot, activeTurnHand);
+        return true;
       }
 
+      // Returns true when the split was applied (guests are refunded by the caller when it returns false)
       function executeSplitForActor(actorId, verifiedExtraBet = null) {
-        if (phase !== "playing") return;
-        if (activeTurnSpot < 0 || activeTurnSpot >= spots.length) return;
+        if (phase !== "playing") return false;
+        if (activeTurnSpot < 0 || activeTurnSpot >= spots.length) return false;
         const spot = spots[activeTurnSpot];
-        if (!spot || !spot.open) return;
-        if (isOnlineMode() && spot.ownerId !== actorId) return;
+        if (!spot || !spot.open) return false;
+        if (isOnlineMode() && spot.ownerId !== actorId) return false;
 
         const hand = spot.hands[activeTurnHand];
-        if (!hand) return;
+        if (!hand) return false;
 
         const isLocalActor = (actorId === "local" || actorId === "host");
         const availBal = isLocalActor ? state.balance : Infinity;
-        if (!canSplitHand(spot, hand, availBal)) return;
+        if (!canSplitHand(spot, hand, availBal)) return false;
 
         const extraBet = hand.bet;
         if (isLocalActor) {
           state.balance = roundMoney(state.balance - extraBet);
           saveState();
         } else {
-          if (verifiedExtraBet !== null && Math.abs(verifiedExtraBet - extraBet) > 0.01) return;
+          if (!Number.isFinite(verifiedExtraBet) || Math.abs(verifiedExtraBet - extraBet) > 0.01) return false;
         }
 
         SoundFX.playChipClick();
@@ -4547,6 +4636,7 @@
         } else {
           advanceToNextPlayableTurn(activeTurnSpot, activeTurnHand);
         }
+        return true;
       }
 
       function runDealerTurn() {
@@ -4717,13 +4807,34 @@
       }
 
       // RENDERING
+      // Every card animation plays exactly once per client. render() rebuilds the DOM, so we remember when each
+      // animation started and resume it (negative delay) instead of restarting it on every re-render.
+      const cardAnimStart = new Map();
+      const CARD_ANIM_MS = { new: 500, flip: 560 };
+      function getCardAnim(card, hidden) {
+        if (!card) return { cls: "", style: "" };
+        const kind = (!hidden && card.animFlip) ? "flip" : (card.animNew ? "new" : "");
+        if (!kind) return { cls: "", style: "" };
+        const key = (card.uid !== undefined ? card.uid : (card.rank + card.suit)) + ":" + kind;
+        const now = performance.now();
+        if (cardAnimStart.size > 3000) cardAnimStart.clear();
+        if (!cardAnimStart.has(key)) cardAnimStart.set(key, now);
+        const elapsed = now - cardAnimStart.get(key);
+        if (elapsed >= CARD_ANIM_MS[kind]) return { cls: "", style: "" };
+        return {
+          cls: kind === "flip" ? "card-flip-reveal" : "card-new",
+          style: ` style="animation-delay:-${Math.round(elapsed)}ms;"`
+        };
+      }
+
       function renderCardHTML(card, hidden = false) {
         if (hidden) {
-          return `<div class="card hidden-card ${card && card.animNew ? "card-new" : ""}"></div>`;
+          const ha = getCardAnim(card, true);
+          return `<div class="card hidden-card ${ha.cls}"${ha.style}></div>`;
         }
-        const animClass = card.animFlip ? "card-flip-reveal" : (card.animNew ? "card-new" : "");
+        const anim = getCardAnim(card, false);
         return `
-          <div class="card ${card.color} ${animClass}">
+          <div class="card ${card.color} ${anim.cls}"${anim.style}>
             <div class="card-corner">
               <span>${card.rank}</span>
               <span>${card.suit}</span>
@@ -5260,7 +5371,14 @@
             turnDeadline,
             turnDurationActive,
             postRoundDeadline,
-            dealer,
+            // never ship the face-down card to guests: it could be read from the network payload
+            dealer: dealer.hideHole
+              ? Object.assign({}, dealer, {
+                  cards: dealer.cards.map((c, i) => (i === 1
+                    ? { uid: c.uid, rank: "?", suit: "?", color: "black", animNew: c.animNew }
+                    : c))
+                })
+              : dealer,
             spots,
             shoeCount: shoe.length,
             roster: mp.roster
@@ -5474,8 +5592,17 @@
                 }
                 if (data.action === "hit") executeHitForActor(conn.peer);
                 else if (data.action === "stand") executeStandForActor(conn.peer);
-                else if (data.action === "double") executeDoubleForActor(conn.peer, Number(data.extraBet));
-                else if (data.action === "split") executeSplitForActor(conn.peer, Number(data.extraBet));
+                else if (data.action === "double" || data.action === "split") {
+                  const extra = Number(data.extraBet);
+                  const ok = data.action === "double"
+                    ? executeDoubleForActor(conn.peer, extra)
+                    : executeSplitForActor(conn.peer, extra);
+                  if (!ok && Number.isFinite(extra) && extra > 0) {
+                    // the guest already took the extra stake out of their balance: give it back
+                    try { conn.send({ type: "ACTION_REJECTED", refund: roundMoney(extra) }); } catch (e) {}
+                    syncAndRender();
+                  }
+                }
               }
             } catch (err) {
               console.error("Error procesando mensaje de invitado:", err);
@@ -5561,9 +5688,20 @@
               if (data.type === "KICKED") {
                 wasKicked = true;
                 const reason = data.reason || "Has sido expulsado de la sala por el líder de la mesa.";
-                leaveMultiplayer();
+                leaveMultiplayer(true);
                 document.getElementById("mp-feedback").textContent = `🚫 ${reason}`;
                 switchView("mp-view");
+                return;
+              }
+
+              if (data.type === "ACTION_REJECTED") {
+                const refund = Number(data.refund);
+                if (Number.isFinite(refund) && refund > 0) {
+                  state.balance = roundMoney(state.balance + refund);
+                  saveState();
+                  try { conn.send({ type: "GUEST_BALANCE_UPDATE", balance: roundMoney(state.balance) }); } catch (e) {}
+                  render();
+                }
                 return;
               }
 
@@ -5591,7 +5729,23 @@
                   postRoundDeadline = data.postRoundDeadline;
                 }
                 dealer = data.dealer;
+                // While betting, my own bets are authoritative locally. A late sync built before the host processed my
+                // last click would otherwise roll the bet back while the chips already left my balance (money vanished).
+                const myIdForSync = getMyId();
+                const localMyBets = {};
+                if (phase === "betting" || phase === "resolved") {
+                  spots.forEach(sp => {
+                    if (sp && sp.open && sp.ownerId === myIdForSync) localMyBets[sp.index] = sp.bet || 0;
+                  });
+                }
                 spots = data.spots;
+                if (phase === "betting" || phase === "resolved") {
+                  spots.forEach(sp => {
+                    if (sp && sp.open && sp.ownerId === myIdForSync && localMyBets[sp.index] !== undefined) {
+                      sp.bet = localMyBets[sp.index];
+                    }
+                  });
+                }
                 mp.roster = data.roster || {};
                 if (prevPostRoundDeadline > 0 && postRoundDeadline === 0 && phase === "betting" && !deferredKeepBetApplied && state.keepBet && state.onlineLastBets.some(b => b > 0)) {
                   deferredKeepBetApplied = true;
@@ -5682,7 +5836,7 @@
           conn.on("close", () => {
             if (!wasKicked && mp.role === "guest") {
               document.getElementById("mp-feedback").textContent = "El líder ha cerrado la sala.";
-              leaveMultiplayer();
+              leaveMultiplayer(true);
             }
           });
         });
@@ -5692,7 +5846,9 @@
         });
       }
 
-      function leaveMultiplayer() {
+      // refundInPlay: the round was cancelled for me (room closed / kicked / I closed my own room), so the stakes
+      // already taken out of my balance for the hands in play are returned instead of being lost.
+      function leaveMultiplayer(refundInPlay = false) {
         clearAllScheduledTimers();
         stopTurnTimer();
         postRoundDeadline = 0;
@@ -5700,7 +5856,8 @@
         closePlayerProfileModal();
 
         const myTableBet = getMyTableBetTotal();
-        if ((phase === "betting" || phase === "resolved") && myTableBet > 0) {
+        const roundInProgress = (phase === "dealing" || phase === "playing" || phase === "dealer");
+        if (((phase === "betting" || phase === "resolved") || (roundInProgress && (refundInPlay || mp.role === "host"))) && myTableBet > 0) {
           state.balance = roundMoney(state.balance + myTableBet);
         }
 
@@ -6247,7 +6404,7 @@
       // MULTIPLAYER EVENTS
       document.getElementById("btn-create-room").addEventListener("click", setupPeerHost);
       document.getElementById("btn-join-room").addEventListener("click", setupPeerGuest);
-      document.getElementById("btn-leave-room").addEventListener("click", leaveMultiplayer);
+      document.getElementById("btn-leave-room").addEventListener("click", () => leaveMultiplayer(false));
 
       document.getElementById("btn-copy-code").addEventListener("click", () => {
         navigator.clipboard.writeText(mp.roomCode);
